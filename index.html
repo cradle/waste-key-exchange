@@ -1,0 +1,29 @@
+<html>  
+  <head>
+    <link type="text/css" rel="stylesheet" href="/stylesheets/main.css" />
+    <title>Waste Key Exchange</title>
+  </head>
+
+  <body>
+    <h1>Waste Key Exchange</h1>
+    <form action="/add" method="post">
+      <div>
+        <label for="host">Host Name (optional)</label><br />
+        <input type='text' name='host'></input>
+      <div>
+        <label for='public_key'>Public Key (required)</label><br />
+        <textarea name="public_key"></textarea>
+      </div>
+      <div><input type="submit" value="Add Key"></div>
+    </form>
+
+    {% for user in users %}
+      <p><pre><code>
+WASTE_PUBLIC_KEY 20 {{ user.length|escape }} {{ user.name|escape }}
+{{ user.public_key|escape }}
+WASTE_PUBLIC_KEY
+      </code></pre></p>
+    {% endfor %}
+  </body>
+</html>
+
