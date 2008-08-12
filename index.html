@@ -10,20 +10,23 @@
       <div>
         <label for="host">Host Name (optional)</label><br />
         <input type='text' name='host'></input>
+      </div>
       <div>
         <label for='public_key'>Public Key (required)</label><br />
         <textarea name="public_key"></textarea>
       </div>
       <div><input type="submit" value="Add Key"></div>
     </form>
-
+    <ul>
     {% for user in users %}
-      <p><pre><code>
-WASTE_PUBLIC_KEY 20 {{ user.length|escape }} {{ user.name|escape }}
+      <li>
+        <pre>
+{{ user.key_type|escape }} 20 {{ user.length|escape }} {{ user.name|escape }}
 {{ user.public_key|escape }}
-WASTE_PUBLIC_KEY
-      </code></pre></p>
+{{ user.key_type|escape }}</pre>
+      </li>
     {% endfor %}
+    </ul>
   </body>
 </html>
 

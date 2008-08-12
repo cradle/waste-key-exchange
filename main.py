@@ -10,7 +10,9 @@ class User(db.Model):
   browser_ip    = db.StringProperty( required = True )
   host          = db.StringProperty()
   name          = db.StringProperty( required = True )
+  key_type      = db.StringProperty( required = True )
   public_key    = db.TextProperty( required = True )
+  number        = db.IntegerProperty( required = True )
   length        = db.IntegerProperty( required = True )
   
   date = db.DateTimeProperty( auto_now_add = True )
@@ -18,6 +20,8 @@ class User(db.Model):
   def __init__(self, *args, **keywords):
     if keywords.has_key('public_key_dump'):
       data = keywords.pop('public_key_dump').strip().split()
+      keywords['key_type'] = data[0]
+      keywords['number'] = long(data[1])
       keywords['length'] = long(data[2])
       keywords['name'] = data[3]
       keywords['public_key'] = "\n".join(data[4:-1])

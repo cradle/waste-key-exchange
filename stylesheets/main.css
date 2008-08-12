@@ -1,8 +1,23 @@
 body {
   text-align:center;
+  background: #eef;
 }
 
 textarea {
   width: 39em;
   height: 15em;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+pre {
+  margin-left:auto;
+  margin-right:auto;
+  width: 39em;
+  outline: 1px solid #ffe;
+  background: #ddf;
 }
