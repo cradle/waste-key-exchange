@@ -1,7 +1,8 @@
 import cgi
 import wsgiref.handlers
 import os
-import parser
+from parser import Key
+from StringIO import StringIO
 from google.appengine.ext.webapp import template
 from google.appengine.ext import db
 from google.appengine.api import users
@@ -19,34 +20,38 @@ class User(db.Model):
   
   date = db.DateTimeProperty( auto_now_add = True )
   
-  def create_from_file(file):
-    pass    
-  create_from_file = staticmethod(create_from_file)
-
-  def __init__(self, *args, **keywords):
-    if keywords.has_key('public_key_dump'):
-      data = keywords.pop('public_key_dump').strip().split()
-      keywords['key_type'] = data[0]
-      keywords['number'] = long(data[1])
-      keywords['length'] = long(data[2])
-      keywords['name'] = data[3]
-      keywords['public_key'] = "\n".join(data[4:-1])
+  def create_from_file(file, **v):
+    num = 0
     
-    super(User, self).__init__(*args, **keywords)
+    try:
+      while(1):
+        k = Key(file)
+        u = User(
+          public_key = "\n".join(k.public),
+          name         = k.name,
+          length       = k.length,
+          number       = k.number,
+          network_name = v['network_name'],
+          browser_ip   = v['browser_ip'],
+          host         = v['host'],
+          key_type     = Key.token,
+        )
+        u.put()
+        num += 1
+    except StopIteration:
+      pass
+      
+    return num 
+  create_from_file = staticmethod(create_from_file)
 
 class AddKey(webapp.RequestHandler):
   def post(self):
-    try:
-      user = User(
-        network_name    = self.request.get('network'),
-        browser_ip      = self.request.remote_addr,
-        public_key_dump = self.request.get('public_key'),
-        host            = self.request.get('host')
-      )
-
-      user.put()
-    except:
-      pass
+    User.create_from_file(
+      StringIO(self.request.get('public_keys')),
+      network_name    = self.request.get('network'),
+      browser_ip      = self.request.remote_addr,
+      host            = self.request.get('host')
+    )
       
     self.redirect('/')
 

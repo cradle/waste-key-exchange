@@ -16,7 +16,15 @@ indexes:
   - name: date
     direction: desc
 
-# Used 6 times in query history.
+# Used 5 times in query history.
+- kind: User
+  properties:
+  - name: host_name
+  - name: network_name
+  - name: date
+    direction: desc
+
+# Used 20 times in query history.
 - kind: User
   properties:
   - name: network_name
