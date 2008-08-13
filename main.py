@@ -38,7 +38,7 @@ class AddKey(webapp.RequestHandler):
   def post(self):
     try:
       user = User(
-        network_name    = self.request.get('network_name'),
+        network_name    = self.request.get('network'),
         browser_ip      = self.request.remote_addr,
         public_key_dump = self.request.get('public_key'),
         host            = self.request.get('host')
@@ -52,8 +52,7 @@ class AddKey(webapp.RequestHandler):
 
 class MainPage(webapp.RequestHandler):
   def get(self):
-    user_query = User.all().order('-date')
-    users = user_query.fetch(1000)
+    users = User.all().filter('network_name =', '').order('-date').fetch(1000)
 
     path = os.path.join(os.path.dirname(__file__), 'index.html')
     self.response.out.write(template.render(path, {'users': users}))
