@@ -1,6 +1,7 @@
 import cgi
 import wsgiref.handlers
 import os
+import parser
 from google.appengine.ext.webapp import template
 from google.appengine.ext import db
 from google.appengine.api import users
@@ -11,11 +12,16 @@ class User(db.Model):
   host          = db.StringProperty()
   name          = db.StringProperty( required = True )
   key_type      = db.StringProperty( required = True )
+  network_name  = db.StringProperty()
   public_key    = db.TextProperty( required = True )
   number        = db.IntegerProperty( required = True )
   length        = db.IntegerProperty( required = True )
   
   date = db.DateTimeProperty( auto_now_add = True )
+  
+  def create_from_file(file):
+    pass    
+  create_from_file = staticmethod(create_from_file)
 
   def __init__(self, *args, **keywords):
     if keywords.has_key('public_key_dump'):
@@ -32,6 +38,7 @@ class AddKey(webapp.RequestHandler):
   def post(self):
     try:
       user = User(
+        network_name    = self.request.get('network_name'),
         browser_ip      = self.request.remote_addr,
         public_key_dump = self.request.get('public_key'),
         host            = self.request.get('host')

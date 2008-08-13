@@ -3,9 +3,43 @@ body {
   background: #eef;
 }
 
+h1 {
+  font-size: 1.5em;
+  border: 1px solid #ffe;
+  background: #ddf;
+  padding: 0.3em;
+  margin: 0;
+}
+
+fieldset {
+  margin: 0 auto 0 auto;
+  padding: 0;
+  width: 34em;
+  border: 1px solid #ffe;
+  background: #ddf;
+}
+
+p {
+  padding: 0 0 0.5em 0;
+  margin: 0;
+}
+
+label {
+  display: block;
+}
+
+legend {
+  margin: 0 0 0 1em;
+}
+
+input {
+  border: 1px solid #bbe;
+}
+
 textarea {
   width: 39em;
   height: 15em;
+  border: 1px solid #bbe;
 }
 
 ul {
@@ -14,10 +48,15 @@ ul {
   margin: 0;
 }
 
-pre {
+li {
   margin-left:auto;
   margin-right:auto;
-  width: 39em;
+  width: 34em;
   outline: 1px solid #ffe;
   background: #ddf;
+}
+
+pre {
+  margin: 0;
+  padding: 0.5em 0;
 }

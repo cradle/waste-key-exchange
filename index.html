@@ -7,15 +7,22 @@
   <body>
     <h1>Waste Key Exchange</h1>
     <form action="/add" method="post">
-      <div>
-        <label for="host">Host Name (optional)</label><br />
-        <input type='text' name='host'></input>
-      </div>
-      <div>
-        <label for='public_key'>Public Key (required)</label><br />
-        <textarea name="public_key"></textarea>
-      </div>
-      <div><input type="submit" value="Add Key"></div>
+      <fieldset>
+        <legend>Add Keys</legend>
+        <p>
+          <label for="host">Host Name</label>
+          <input type='text' name='host'></input>
+        </p>
+        <p>
+          <label for="host">Network Name</label>
+          <input type='text' name='network'></input>
+        </p>
+        <p>
+          <label for='public_key'>Public Keys</label>
+          <textarea name="public_key"></textarea>
+        </p>
+        <p><input type="submit" value="Add Keys"></p>
+      </fieldset>
     </form>
     <ul>
     {% for user in users %}
